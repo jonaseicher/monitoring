@@ -1,0 +1,33 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: grafana
+spec:
+  triggers: []
+  source:
+    type: Git
+    git:
+      uri: https://ghe.adp.allianz/AMIS20/Prometheus.git
+      ref: master
+    secrets:
+    - destinationDir: ./grafana
+      secret:
+        name: npmrc-lazy-proxy
+    contextDir: services
+    sourceSecret:
+      name: ghe-credentials
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: grafana/Dockerfile
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 150m
+      memory: 512Mi
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "grafana:prod"

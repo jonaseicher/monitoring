@@ -1,0 +1,33 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: hello-node-exporter
+spec:
+  triggers: []
+  source:
+    type: Git
+    git:
+      uri: https://ghe.adp.allianz/AMIS20/Prometheus.git
+      ref: master
+    secrets:
+    - destinationDir: ./hello-node-exporter
+      secret:
+        name: npmrc-lazy-proxy
+    contextDir: services
+    sourceSecret:
+      name: ghe-credentials
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: hello-node-exporter/Dockerfile
+  resources:
+    limits:
+      cpu: 200m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "hello-node-exporter:prod"

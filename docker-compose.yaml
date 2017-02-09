@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+
+  prometheus:
+    image: devops/prometheus
+    container_name: prometheus
+    restart: always
+    environment:
+      PROMETHEUS_SERVER_VERSION: 1.3.1
+    volumes:
+      - ~/docker/volumes/prometheus:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - metrics
+
+  grafana:
+    image: devops/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - metrics
+
+  jenkins:
+    image: jenkins
+    container_name: jenkins
+    ports:
+      - "8060:8080"
+      - "50000:50000"
+    volumes:
+      - ~/docker/volumes/jenkins:/var/jenkins_home
+    networks:
+      - metrics
+
+  cadvisor:
+    image: google/cadvisor
+    container_name: cadvisor
+    ports:
+      - "9080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - metrics
+
+  phantomas-exporter:
+    image: devops/phantomas-exporter
+    container_name: phantomas-exporter
+    ports:
+      - "9149:9149"
+    networks:
+      - metrics
+
+  node-exporter:
+    image: devops/node-exporter
+    container_name: node-exporter
+    ports:
+      - "4000:4000"
+      - "9100:9100"
+    networks:
+      - metrics
+
+
+networks:
+  metrics:
+    driver: bridge
