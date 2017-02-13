@@ -1,5 +1,5 @@
-FROM centos:7
-#FROM registry.apps.os-test.adp.allianz/atc/base:latest
+#FROM centos:7
+FROM registry.apps.os-test.adp.allianz/atc/base:latest
 
 ENV PROMETHEUS_SERVER_VERSION=1.3.1
 
