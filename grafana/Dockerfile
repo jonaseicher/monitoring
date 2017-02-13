@@ -22,10 +22,6 @@ WORKDIR /app
 
 RUN sed -i 's/console file/console/g' /app/conf/defaults.ini;
 
-COPY run.sh /run.sh
-
-RUN chmod +x /run.sh
-
 VOLUME ["/app/data"]
 
 EXPOSE 3000
