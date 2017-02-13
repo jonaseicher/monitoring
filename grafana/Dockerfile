@@ -1,5 +1,5 @@
-FROM centos:7
-#FROM registry.apps.os-test.adp.allianz/atc/base
+#FROM centos:7
+FROM registry.apps.os-test.adp.allianz/atc/base
 
 MAINTAINER Jonas Eicher <jonas.eicher@kite-consult.de>
 
@@ -21,10 +21,6 @@ RUN yum update -y \
 WORKDIR /app
 
 RUN sed -i 's/console file/console/g' /app/conf/defaults.ini;
-
-COPY run.sh /run.sh
-
-RUN chmod +x /run.sh
 
 VOLUME ["/app/data"]
 
