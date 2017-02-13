@@ -7,10 +7,10 @@ spec:
   source:
     type: Git
     git:
-      uri: https://ghe.adp.allianz/AMIS20/Prometheus.git
+      uri: https://ghe.adp.allianz/AZD-DevOps/monitoring.git
       ref: master
     secrets:
-    - destinationDir: ./prometheus
+    - destinationDir: ./monitoring
       secret:
         name: npmrc-lazy-proxy
     contextDir: services
@@ -30,4 +30,4 @@ spec:
   output:
     to:
       kind: "ImageStreamTag"
-      name: "prometheus:prod"
+      name: "prometheus"
