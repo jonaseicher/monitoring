@@ -5,8 +5,8 @@ metadata:
   namespace: devops-infra
   selfLink: /oapi/v1/namespaces/devops-infra/deploymentconfigs/prometheus
   uid: d02651bb-f1e3-11e6-9b46-0050568f1f38
-  resourceVersion: '36130574'
-  generation: 11
+  resourceVersion: '35904245'
+  generation: 3
   creationTimestamp: '2017-02-13T11:59:03Z'
   labels:
     app: prometheus
@@ -35,7 +35,7 @@ spec:
           kind: ImageStreamTag
           namespace: devops-infra
           name: 'prometheus:latest'
-        lastTriggeredImage: '1.246.55.83:5000/devops-infra/prometheus@sha256:adfff8a92b6919a0a59d467eccb21029edefafeff488b8552311571c904a4850'
+        lastTriggeredImage: '1.246.55.83:5000/devops-infra/prometheus@sha256:4fb1631a01501e938f5225d225cb63a6639501a0f24e61655992f144b4437a32'
   replicas: 1
   test: false
   selector:
@@ -55,14 +55,15 @@ spec:
         -
           name: prometheus-volume-1
           emptyDir:
-        -
-          name: prometheus-config
+        - name: prometheus-config
           configMap:
             name: prometheus-yml
+            items:
+              path: prometheus.yml
       containers:
         -
           name: prometheus
-          image: '1.246.55.83:5000/devops-infra/prometheus@sha256:adfff8a92b6919a0a59d467eccb21029edefafeff488b8552311571c904a4850'
+          image: '1.246.55.83:5000/devops-infra/prometheus@sha256:4fb1631a01501e938f5225d225cb63a6639501a0f24e61655992f144b4437a32'
           ports:
             -
               containerPort: 9090
@@ -78,18 +79,8 @@ spec:
             -
               name: prometheus-volume-1
               mountPath: /prometheus
-            -
-              name: prometheus-config
+            - name: prometheus-config
               mountPath: /etc/prometheus
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 9090
-              scheme: HTTP
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
           terminationMessagePath: /dev/termination-log
           imagePullPolicy: IfNotPresent
       restartPolicy: Always

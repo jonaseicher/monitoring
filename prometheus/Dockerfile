@@ -21,7 +21,7 @@ RUN yum update -y \
 
 # taken from https://hub.docker.com/r/prom/prometheus/~/dockerfile/
 EXPOSE 9090
-VOLUME [ "/prometheus" ]
+VOLUME [ "/prometheus", "/etc/prometheus" ]
 WORKDIR /prometheus
 ENTRYPOINT [ "/opt/prometheus/prometheus" ]
 CMD [ "-config.file=/etc/prometheus/prometheus.yml", \

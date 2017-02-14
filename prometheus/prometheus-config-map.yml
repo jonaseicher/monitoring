@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-yml
+  namespace: devops-infra
+  selfLink: /api/v1/namespaces/devops-infra/configmaps/prometheus-yml
+  uid: a5bc025f-f2ad-11e6-9b46-0050568f1f38
+  resourceVersion: '36141901'
+  creationTimestamp: '2017-02-14T12:03:50Z'
+data:
+  prometheus.yml: "# my bla 123 global config\nglobal:\n  scrape_interval:     15s # By default, scrape targets every 15 seconds.\n  evaluation_interval: 15s # By default, scrape targets every 15 seconds.\n  # scrape_timeout is set to the global default (10s).\n\nscrape_configs:\n  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.\n  - job_name: 'prometheus'\n    # Override the global default and scrape targets from this job every 5 seconds.\n    scrape_interval: 5s\n    # metrics_path defaults to '/metrics'\n    # scheme defaults to 'http'.\n    static_configs:\n      - targets: ['localhost:9090']\n\n\n  - job_name: 'pcf-metrics-quotas'\n    # Override the global default and scrape targets from this job every 1 seconds.\n    scrape_interval: 10s\n    # metrics_path defaults to '/metrics'\n    # scheme defaults to 'http'.\n    scheme: https\n    tls_config:\n      insecure_skip_verify: true\n    static_configs:\n      - targets: ['adp-dashboard.apps.adp.allianz']\n\n\n  - job_name: 'node-exporter'\n    scrape_interval: 15s\n    static_configs:\n      - targets: ['node-exporter:9100']\n\n\n  - job_name: 'cadvisor'\n    scrape_interval: 15s\n    static_configs:\n      - targets: ['cadvisor:9080']\n\n\n  - job_name: 'sitemetrics_google_de'\n    scrape_interval: 20s\n    metrics_path: \"/\"\n    params:\n      'url': ['http://google.de']\n    static_configs:\n      - targets: ['phantomas-exporter:9149']\n\n\n  - job_name: 'sitemetrics_bluebird_service'\n    scrape_interval: 120s\n    metrics_path: \"/\"\n    params:\n      'url': ['https://api-test.allianz.de/bluebird-api/service']\n    static_configs:\n      - targets: ['phantomas-exporter:9149']\n\n\n  - job_name: 'jenkins_metrics'\n    scrape_interval: 120s\n    metrics_path: \"/prometheus\"\n    static_configs:\n      - targets: ['jenkins:8060']\n"
+
