@@ -26,6 +26,15 @@ scrape_configs:
     static_configs:
       - targets: ['adp-dashboard.apps.adp.allianz']
 
+  # Example for scraping cadvisor metrics from oc. needs additional configuration for accessing the nodes. curling this replies with a json body saying forbidden for anonymous user
+  - job_name: 'oc-node-metrics'
+    scrape_interval: 15s
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['compute-node01.os-test.adp.allianz:10250']
+
 
   - job_name: 'node-exporter'
     scrape_interval: 15s
