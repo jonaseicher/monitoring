@@ -31,18 +31,35 @@ data:
         static_configs:
           - targets: ['nova-jenkins.dev.adp.allianz']
 
-      - job_name: 'node-exporter'
+      - job_name: 'hello-node-exporter'
         scrape_interval: 15s
         static_configs:
-          - targets: ['node-exporter:9100']
+          - targets: ['hello-node-exporter-amisnow-dev.apps.os-test.adp.allianz']
 
-      - job_name: 'cadvisor'
+      - job_name: 'crash-machine-node-exporter'
         scrape_interval: 15s
         static_configs:
-          - targets: ['cadvisor:9080']
+          - targets: ['crash-machine-exporter-amisnow-dev.apps.os-test.adp.allianz']
+
+      - job_name: 'sitemetrics_asms_qs'
+        scrape_interval: 120s
+        scrape_timeout: 30s
+        metrics_path: "/"
+        params:
+          'url': ['https://asms-qs.azd.io']
+        static_configs:
+          - targets: ['site-stats-exporter.apps.os-test.adp.allianz']
+
+      - job_name: 'sitemetrics_bluebird_service'
+        scrape_interval: 120s
+        metrics_path: "/"
+        params:
+          'url': ['https://api-test.allianz.de/bluebird-api/service']
+        static_configs:
+          - targets: ['site-stats-exporter.apps.os-test.adp.allianz']
 
       - job_name: 'sitemetrics_google_de'
-        scrape_interval: 20s
+        scrape_interval: 120s
         metrics_path: "/"
         params:
           'url': ['http://google.de']
@@ -57,24 +74,10 @@ data:
           'sonar': ['http://sonarqube.apps.os-test.adp.allianz']
         static_configs:
           - targets: ['sonarqube-exporter.apps.os-test.adp.allianz']
-
-      - job_name: 'sitemetrics_bluebird_service'
-        scrape_interval: 120s
-        metrics_path: "/"
-        params:
-          'url': ['https://api-test.allianz.de/bluebird-api/service']
-        static_configs:
-          - targets: ['site-stats-exporter.apps.os-test.adp.allianz']
-
-      - job_name: 'jenkins_metrics'
-        scrape_interval: 120s
-        metrics_path: "/prometheus"
-        static_configs:
-          - targets: ['jenkins:8060']
 kind: ConfigMap
 metadata:
   annotations:
-    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"ConfigMap","apiVersion":"v1","metadata":{"name":"prometheus-yml","namespace":"devops-infra","selfLink":"/api/v1/namespaces/devops-infra/configmaps/prometheus-yml","uid":"a5bc025f-f2ad-11e6-9b46-0050568f1f38","resourceVersion":"36332140","creationTimestamp":"2017-02-14T12:03:50Z"},"data":{"prometheus.yml":"global:\n  scrape_interval:     15s\n  evaluation_interval:
+    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"ConfigMap","apiVersion":"v1","metadata":{"name":"prometheus-yml","namespace":"devops-infra","selfLink":"/api/v1/namespaces/devops-infra/configmaps/prometheus-yml","uid":"a5bc025f-f2ad-11e6-9b46-0050568f1f38","resourceVersion":"36344358","creationTimestamp":"2017-02-14T12:03:50Z"},"data":{"prometheus.yml":"global:\n  scrape_interval:     15s\n  evaluation_interval:
       15s\n\nscrape_configs:\n  - job_name: ''prometheus''\n    static_configs:\n      -
       targets: [''localhost:9090'']\n\n  - job_name: ''pcf-metrics-quotas''\n    scrape_interval:
       10s\n    scheme: https\n    tls_config:\n      insecure_skip_verify: true\n    static_configs:\n      -
@@ -82,23 +85,25 @@ metadata:
       30s\n    scrape_timeout: 20s\n    metrics_path: \"/prometheus/\"\n    scheme:
       https\n    #tls_config:\n    #  insecure_skip_verify: true\n    #basic_auth:\n    #  username:
       \"prometheus\"\n    #  password: \"Allianz2017!\"\n    static_configs:\n      -
-      targets: [''nova-jenkins.dev.adp.allianz'']\n\n  - job_name: ''node-exporter''\n    scrape_interval:
-      15s\n    static_configs:\n      - targets: [''node-exporter:9100'']\n\n  - job_name:
-      ''cadvisor''\n    scrape_interval: 15s\n    static_configs:\n      - targets:
-      [''cadvisor:9080'']\n\n  - job_name: ''sitemetrics_google_de''\n    scrape_interval:
-      20s\n    metrics_path: \"/\"\n    params:\n      ''url'': [''http://google.de'']\n    static_configs:\n      -
+      targets: [''nova-jenkins.dev.adp.allianz'']\n\n  - job_name: ''hello-node-exporter''\n    scrape_interval:
+      15s\n    static_configs:\n      - targets: [''hello-node-exporter-amisnow-dev.apps.os-test.adp.allianz'']\n\n  -
+      job_name: ''crash-machine-node-exporter''\n    scrape_interval: 15s\n    static_configs:\n      -
+      targets: [''crash-machine-exporter-amisnow-dev.apps.os-test.adp.allianz'']\n\n  -
+      job_name: ''sitemetrics_asms_qs''\n    scrape_interval: 120s\n    scrape_timeout:
+      30s\n    metrics_path: \"/\"\n    params:\n      ''url'': [''https://asms-qs.azd.io'']\n    static_configs:\n      -
       targets: [''site-stats-exporter.apps.os-test.adp.allianz'']\n\n  - job_name:
-      ''sonarmetrics_crp_boot''\n    scrape_interval: 20s\n    metrics_path: \"/\"\n    params:\n      ''key'':
-      [''de.allianz.asms:boot'']\n      ''sonar'': [''http://sonarqube.apps.os-test.adp.allianz'']\n    static_configs:\n      -
-      targets: [''sonarqube-exporter.apps.os-test.adp.allianz'']\n\n  - job_name:
       ''sitemetrics_bluebird_service''\n    scrape_interval: 120s\n    metrics_path:
       \"/\"\n    params:\n      ''url'': [''https://api-test.allianz.de/bluebird-api/service'']\n    static_configs:\n      -
       targets: [''site-stats-exporter.apps.os-test.adp.allianz'']\n\n  - job_name:
-      ''jenkins_metrics''\n    scrape_interval: 120s\n    metrics_path: \"/prometheus\"\n    static_configs:\n      -
-      targets: [''jenkins:8060'']\n"}}'
+      ''sitemetrics_google_de''\n    scrape_interval: 120s\n    metrics_path: \"/\"\n    params:\n      ''url'':
+      [''http://google.de'']\n    static_configs:\n      - targets: [''site-stats-exporter.apps.os-test.adp.allianz'']\n\n  -
+      job_name: ''sonarmetrics_crp_boot''\n    scrape_interval: 20s\n    metrics_path:
+      \"/\"\n    params:\n      ''key'': [''de.allianz.asms:boot'']\n      ''sonar'':
+      [''http://sonarqube.apps.os-test.adp.allianz'']\n    static_configs:\n      -
+      targets: [''sonarqube-exporter.apps.os-test.adp.allianz'']\n"}}'
   creationTimestamp: 2017-02-14T12:03:50Z
   name: prometheus-yml
   namespace: devops-infra
-  resourceVersion: "36332727"
+  resourceVersion: "36345008"
   selfLink: /api/v1/namespaces/devops-infra/configmaps/prometheus-yml
   uid: a5bc025f-f2ad-11e6-9b46-0050568f1f38
