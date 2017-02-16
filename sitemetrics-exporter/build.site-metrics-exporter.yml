@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: site-metrics-exporter
+  namespace: devops-infra
+  selfLink: /oapi/v1/namespaces/devops-infra/deploymentconfigs/site-metrics-exporter
+  uid: 28ef6bb1-ee37-11e6-9b46-0050568f1f38
+  resourceVersion: '36397063'
+  generation: 10
+  creationTimestamp: '2017-02-08T19:45:35Z'
+  labels:
+    app: site-metrics-exporter
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+spec:
+  strategy:
+    type: Recreate
+    recreateParams:
+      timeoutSeconds: 600
+    resources:
+  triggers:
+    -
+      type: ConfigChange
+    -
+      type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - site-metrics-exporter
+        from:
+          kind: ImageStreamTag
+          namespace: atc
+          name: 'site-metrics-exporter:1.0.0'
+        lastTriggeredImage:
+  replicas: 1
+  test: false
+  selector:
+    app: site-metrics-exporter
+    deploymentconfig: site-metrics-exporter
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: site-metrics-exporter
+        deploymentconfig: site-metrics-exporter
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        -
+          name: site-metrics-exporter
+          image: '1.246.55.83:5000/devops-infra/site-metrics-exporter'
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+status:
+  latestVersion: 8
+  observedGeneration: 10
+  replicas: 1
+  updatedReplicas: 1
+  availableReplicas: 1
+  details:
+    message: 'caused by a config change'
+    causes:
+      -
+        type: ConfigChange
+
