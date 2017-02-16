@@ -35,7 +35,7 @@ The container ports are mapped to the host. Check the docker-compose.yaml for th
 
 The container volumes are automatically mapped to ~/docker/volumes/...
 
-Go to `http://localhost:9090` for prometheus
-Go to `http://localhost:3000` for grafana (credentials: admin, admin)
-Go to `http://localhost:9100/metrics` to see some node-exporter metrics in the prometheus format
-Go to `http://localhost:9080` `http://localhost:9080/metrics` for to see some cadvisor metrics
+- Go to `http://localhost:9090` for prometheus
+- Go to `http://localhost:3000` for grafana (credentials: admin, admin)
+- Go to `http://localhost:9100/metrics` to see some node-exporter metrics in the prometheus format
+- Go to `http://localhost:9080` `http://localhost:9080/metrics` for to see some cadvisor metrics
