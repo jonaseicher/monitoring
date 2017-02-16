@@ -1,15 +1,22 @@
 # Prometheus Server
 
-This repository contains definitions for building a Docker image for the
-*Prometheus* monitoring system and time-series database, and for creating and
-updating deployments of Prometheus on CRP.
+This repository contains Dockerfiles, a docker-compose file and the configuration files needed to get started with Prometheus, Grafana and some Exporters. You can build it locally with docker-compose or in your openshift Orgspace with the respective build.yml files. Docker-compose works out-of-the-box. For Openshift PoCs, you need to make small adjustments to the configs. Ask us for help!
 
-The CI/CD pipeline is defined completely in the [Jenkinsfile](Jenkinsfile)
-contained in this repository.
+## Building the Docker images
 
+With docker-compose, you can build a complete monitoring setup, consisting of:
+- grafana (dashboard)
+- prometheus (metrics scraper and database)
+- node-exporter (metrics exporter)
+- cadvisor (metrics exporter)
+- Jenkins (exports metrics with Metrics and Prometheus Plugins*)
 
-## Building the Docker image
-To build the prometheus-server Docker image outside the Jenkins pipeline, run
+To build it, run the following command:
+```
+docker-compose build
+```
+
+To build only a specific image, i.e. the prometheus-server or grafana, cd in the respective directory and run
 the following command:
 ```
 docker build -t <name>:<tag> .
@@ -17,28 +24,18 @@ docker build -t <name>:<tag> .
 
 where `<name>` and `<tag>` are the image name and version tag you want to use.
 
-**Notes:**
-- Since the image is based on the `crp/base` image, make sure you have access to
-the CRP Docker registry in the environment you are running the Docker build in,
-so the base image can be accessed.
--  The base image contains proxy settings that are required when doing the
-Docker build in the ADP/CRP VMware environment. When using the Dockerfile in
-another environment, adapt the setting accordingly by supplying different
-`http_proxy` and `https_proxy` ENV variables.
+## Running the Docker images
 
-
-## Running the Docker container
-The Docker container exposes the following port which must be mapped on the
-host:
-- `9090` - the port of the Prometheus server UI and REST API
-
-The following volumes can be mounted to the Docker container:
-- `/prometheus` - this directory contains Prometheus' time-series data and
-  meta-data
-
-When starting the container on the command line, use the following command:
+If you ran a `docker-compose build` successfully, run the following command:
 ```
-docker run -d --name prometheus-server -p 9090:9090 \
-  -v /some/directory:/prometheus \
-  <docker image name>:<docker image tag>
+docker-compose up
 ```
+This will start all the containers and output the logs in your console.
+The container ports are mapped to the host. Check the docker-compose.yaml for the host port mappings and change them, if you are using and of the for other apps.
+
+The container volumes are automatically mapped to ~/docker/volumes/...
+
+Go to `http://localhost:9090` for prometheus
+Go to `http://localhost:3000` for grafana (credentials: admin, admin)
+Go to `http://localhost:9100/metrics` to see some node-exporter metrics in the prometheus format
+Go to `http://localhost:9080` `http://localhost:9080/metrics` for to see some cadvisor metrics
