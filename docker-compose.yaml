@@ -16,6 +16,8 @@ services:
     image: devops/grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ~/docker/volumes/grafana:/app/data
 
   jenkins:
     image: jenkins

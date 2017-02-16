@@ -3,7 +3,7 @@ FROM centos:7
 
 MAINTAINER Jonas Eicher <jonas.eicher@kite-consult.de>
 
-ENV GRAFANA_VERSION 4.1.1-1484211277
+ENV GRAFANA_VERSION 4.1.2-1486989747
 
 RUN yum update -y \
     && yum install -y wget \

@@ -32,16 +32,8 @@ scrape_configs:
     static_configs:
       - targets: ['monitoring_sitemetrics-exporter_1:9149']
 
-  - job_name: 'sitemetrics_bluebird_service'
-    scrape_interval: 120s
-    metrics_path: "/"
-    params:
-      'url': ['https://api-test.allianz.de/bluebird-api/service']
-    static_configs:
-      - targets: ['monitoring_sitemetrics-exporter_1:9149']
-
   - job_name: 'jenkins_metrics'
     scrape_interval: 120s
-    metrics_path: "/prometheus"
+    metrics_path: "/prometheus/"
     static_configs:
-      - targets: ['monitoring_jenkins_1:8060']
+      - targets: ['monitoring_jenkins_1:8080']
