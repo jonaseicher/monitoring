@@ -1,5 +1,5 @@
-#FROM centos:7
-FROM registry.apps.os-test.adp.allianz/atc/base
+FROM centos:7
+#FROM registry.apps.os-test.adp.allianz/atc/base
 
 MAINTAINER Jonas Eicher <jonas.eicher@kite-consult.de>
 
