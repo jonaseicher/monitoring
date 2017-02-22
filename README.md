@@ -4,7 +4,7 @@ This repository contains Dockerfiles, a docker-compose file and the configuratio
 
 ## Building the Docker images
 
-With docker-compose, you can build a complete monitoring setup, consisting of:
+With docker-compose, you can build a monitoring playground, consisting of:
 - grafana (dashboard)
 - prometheus (metrics scraper and database)
 - node-exporter (metrics exporter)
