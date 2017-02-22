@@ -1,15 +1,11 @@
-FROM node:boron
+FROM centos:7
 # -----------------------------------------------------------------------------
 # Startup
 # -----------------------------------------------------------------------------
 #USER www-data
 
-COPY helloworld.js /home/node/
-COPY entrypoint.sh /entrypoint.sh
 COPY node_exporter /bin/
 
-RUN chmod +x /entrypoint.sh
+EXPOSE 9100
 
-EXPOSE 4000 9100
-
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT /bin/node_exporter

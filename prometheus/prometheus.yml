@@ -37,3 +37,8 @@ scrape_configs:
     metrics_path: "/prometheus/"
     static_configs:
       - targets: ['monitoring_jenkins_1:8080']
+
+  - job_name: 'custom-exporter'
+    scrape_interval: 20s
+    static_configs:
+      - targets: ['monitoring_custom-exporter_1:9150']

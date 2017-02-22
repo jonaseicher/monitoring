@@ -43,6 +43,13 @@ services:
     ports:
       - "9149:9149"
 
+
+  custom-exporter:
+    build: ./custom-exporter
+    image: devops/custom-exporter
+    ports:
+      - "9150:9150"
+
   node-exporter:
     build: ./node-exporter
     image: devops/node-exporter
