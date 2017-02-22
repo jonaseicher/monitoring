@@ -1,6 +1,6 @@
 # Monitoring (Prometheus, Grafana, Exporters)
 
-This repository contains Dockerfiles, a docker-compose file and the configuration files needed to get started with Prometheus, Grafana and some Exporters. You can build it locally with docker-compose or in your openshift Orgspace with the respective build.yml files. Docker-compose works out-of-the-box. For Openshift PoCs, you need to make small adjustments to the configs. Ask us for help!
+This repository contains Dockerfiles, a docker-compose file and the configuration files needed to get started with Prometheus, Grafana and some Exporters. You can build it locally with docker-compose or in your openshift Orgspace with the respective build.yml files. Docker-compose works out-of-the-box. For Openshift, you need to customize the configs for your orgspace. Ask us for help!
 
 ## Building the Docker images
 
