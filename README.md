@@ -10,6 +10,7 @@ With docker-compose, you can build a complete monitoring setup, consisting of:
 - node-exporter (metrics exporter)
 - cadvisor (metrics exporter)
 - Jenkins (exports metrics with Metrics and Prometheus Plugins*)
+- Custom exporter (tiny node app, written by me) (metrics exporter) 
 
 To build it, run the following command:
 ```
@@ -38,4 +39,6 @@ The container volumes are automatically mapped to ~/docker/volumes/...
 - Go to `http://localhost:9090` for prometheus
 - Go to `http://localhost:3000` for grafana (credentials: admin, admin)
 - Go to `http://localhost:9100/metrics` to see some node-exporter metrics in the prometheus format
-- Go to `http://localhost:9080` `http://localhost:9080/metrics` for to see some cadvisor metrics
+- Go to `http://localhost:9080` `http://localhost:9080/metrics` for some cadvisor metrics
+- Go to `http://localhost:9150/metrics` for some metrics from a custom exporter
+
